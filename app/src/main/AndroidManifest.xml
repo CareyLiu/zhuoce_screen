@@ -4,6 +4,7 @@
     android:versionCode="1"
     android:versionName="1.0">
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name=".MyApp"
@@ -27,34 +28,53 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
         </activity>
 
-        <activity android:name="com.zhuoce.screen.XiLanCunBaoActivity">
+        <activity
+            android:name="com.zhuoce.screen.XiLanCunBaoActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
+
         </activity>
 
-        <activity android:name="com.zhuoce.screen.XiLianQubaoActivity">
+        <activity
+            android:name="com.zhuoce.screen.XiLianQubaoActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
+
         </activity>
-        <activity android:name="com.zhuoce.screen.QuJianActivity">
+        <activity
+            android:name="com.zhuoce.screen.QuJianActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
+
         </activity>
 
-        <activity android:name="com.zhuoce.screen.WangJiQuOrCunActivity">
+        <activity
+            android:name="com.zhuoce.screen.WangJiQuOrCunActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
+
         </activity>
 
-        <activity android:name="com.zhuoce.screen.KaiGuiOrQuBaoSuccessActivity">
+        <activity
+            android:name="com.zhuoce.screen.KaiGuiOrQuBaoSuccessActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
+
         </activity>
+
+        <receiver
+            android:name="com.zhuoce.receive.StartReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

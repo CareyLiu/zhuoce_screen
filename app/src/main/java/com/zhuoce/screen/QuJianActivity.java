@@ -22,6 +22,7 @@ import com.zhuoce.ZxingUtils;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -144,7 +145,6 @@ public class QuJianActivity extends Activity {
         } else if (cunOrQu.equals("2")) { //2取
             tvWangji.setText("忘记手机密码？");
         }
-
 
 
 //        if (MyApp.openDevice.equals("1")) {
@@ -387,7 +387,7 @@ public class QuJianActivity extends Activity {
 
 
     @OnClick({R.id.btn_one, R.id.btn_two, R.id.btn_three, R.id.btn_four, R.id.btn_five, R.id.btn_six,
-            R.id.btn_seven, R.id.btn_eight, R.id.btn_nine, R.id.btn_zero, R.id.rl_tuige, R.id.btn_qubao,R.id.rl_wangjimima})
+            R.id.btn_seven, R.id.btn_eight, R.id.btn_nine, R.id.btn_zero, R.id.rl_tuige, R.id.btn_qubao, R.id.rl_wangjimima})
     public void onViewClicked(View view) {
         if (tvShoujihao.getText().toString().contains("|")) {
             String str = tvShoujihao.getText().toString().replace("|", "");
@@ -466,13 +466,13 @@ public class QuJianActivity extends Activity {
                 break;
 
             case R.id.rl_wangjimima:
-//                ChuanKouCaoZuoUtils.kaiGui(1, 3);
-//                if (mReadThread == null) {
-//                    mReadThread = new ReadThread();
-//                    mReadThread.start();
-//                }
+                ChuanKouCaoZuoUtils.kaiGui(1, 3);
+                if (mReadThread == null) {
+                    mReadThread = new ReadThread();
+                    mReadThread.start();
+                }
 
-            WangJiQuOrCunActivity.actionStart(QuJianActivity.this, cunOrQu);
+                //WangJiQuOrCunActivity.actionStart(QuJianActivity.this, cunOrQu);
                 break;
         }
     }
@@ -481,8 +481,8 @@ public class QuJianActivity extends Activity {
         String shouJiHao = tvShoujihao.getText().toString();
         String shouJiMiMa = tvShoujimima.getText().toString();
         if (shouJiHao.equals("1111") && shouJiMiMa.equals("1111")) {
-            ChuanKouCaoZuoUtils.kaiGui(1, 1);
-            KaiGuiOrQuBaoSuccessActivity.actionStart(QuJianActivity.this,"qubao");
+            ChuanKouCaoZuoUtils.kaiGui(1, 2);
+            KaiGuiOrQuBaoSuccessActivity.actionStart(QuJianActivity.this, "qubao");
         }
 
     }
@@ -491,7 +491,7 @@ public class QuJianActivity extends Activity {
         String quJianMa = tvShoujihao.getText().toString();
         if (quJianMa.equals("111111")) {
             ChuanKouCaoZuoUtils.kaiGui(1, 1);
-            KaiGuiOrQuBaoSuccessActivity.actionStart(QuJianActivity.this,"qubao");
+            KaiGuiOrQuBaoSuccessActivity.actionStart(QuJianActivity.this, "qubao");
         }
     }
 
@@ -547,6 +547,7 @@ public class QuJianActivity extends Activity {
 
 
     public boolean mFlag = true;
+    HashMap<Integer, String> hashMap;
 
     //读取串口返回数据
     public class ReadThread extends Thread {
@@ -567,20 +568,34 @@ public class QuJianActivity extends Activity {
 
                     if (size == 16) {
 
-                        for (int i = 0; i < size; i++) {
+                        Log.i("QuJianActivity", HexToText.byteArrToHex(buffer) + "");
 
-                            Log.i("QuJianActivity", HexToText.byteArrToHex(buffer) + "");
+                        String strHex = HexToText.byteArrToHex(buffer);
 
+                        if (strHex.charAt(0) == '8' && strHex.charAt(1) == '8') {
+
+                            hashMap = new HashMap<>();
+                            for (int i = 0; i < 24; i = i + 2) {
+                                hashMap.put(i / 2, strHex.charAt(i+4) + "" + strHex.charAt(i+5 ));
+
+                            }
+
+
+                        }
+
+                        for (int i = 0; i < 12; i++) {
+                            Log.i("QuJianActivity", "第" + String.valueOf(i+1) + "个箱子对应的号是：" + hashMap.get(i) + "");
+                        }
 
 //                            Message msg = new Message();
 //                            msg.obj = buffer[i];
 //                            msg.arg1 = 2;
 //                            handler.sendMessage(msg);
 
-                            // flush_buffer
-                            Arrays.fill(buffer, (byte) 0);
-                        }
+                        // flush_buffer
+                        Arrays.fill(buffer, (byte) 0);
                     }
+
                 } catch (IOException e) {
                     e.printStackTrace();
                     return;
