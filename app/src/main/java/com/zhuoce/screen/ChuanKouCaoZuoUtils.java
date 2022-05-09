@@ -3,7 +3,13 @@ package com.zhuoce.screen;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.rairmmd.andmqtt.AndMqtt;
+import com.rairmmd.andmqtt.MqttPublish;
 import com.wits.serialport.SerialPort;
+import com.zhuoce.mqtt.Addr;
+
+import org.eclipse.paho.client.mqttv3.IMqttActionListener;
+import org.eclipse.paho.client.mqttv3.IMqttToken;
 
 import java.io.File;
 import java.io.IOException;
@@ -77,6 +83,21 @@ public class ChuanKouCaoZuoUtils {
             } else {
                 Log.e(TAG, "mOutputStream:--------null");
             }
+
+
+            String msg = "K" + xiangZiHao + "11" + ".";
+
+            AndMqtt.getInstance().publish(new MqttPublish().setMsg(msg).setQos(2).setTopic(Addr.ccidAddr), new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    Log.i("mqtt", "发送成功");
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }

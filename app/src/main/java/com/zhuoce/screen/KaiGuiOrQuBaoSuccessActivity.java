@@ -49,7 +49,7 @@ public class KaiGuiOrQuBaoSuccessActivity extends Activity {
         rlFanhuishouye.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(KaiGuiOrQuBaoSuccessActivity.this, XiLanHomeActivity.class);
+                Intent intent = new Intent(KaiGuiOrQuBaoSuccessActivity.this, XiLanHome_video_Activity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }

@@ -18,7 +18,12 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.gyf.barlibrary.ImmersionBar;
+import com.rairmmd.andmqtt.AndMqtt;
+import com.rairmmd.andmqtt.MqttPublish;
 import com.zhuoce.ZxingUtils;
+
+import org.eclipse.paho.client.mqttv3.IMqttActionListener;
+import org.eclipse.paho.client.mqttv3.IMqttToken;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -33,6 +38,7 @@ import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
+import static com.zhuoce.mqtt.Addr.ccidAddr;
 
 
 public class QuJianActivity extends Activity {
@@ -483,17 +489,37 @@ public class QuJianActivity extends Activity {
         if (shouJiHao.equals("1111") && shouJiMiMa.equals("1111")) {
             ChuanKouCaoZuoUtils.kaiGui(1, 2);
             KaiGuiOrQuBaoSuccessActivity.actionStart(QuJianActivity.this, "qubao");
+
+
         }
 
     }
 
     public void quJianMaGetNet() {
+        // TODO: 2022-03-21 校验serverid ccid
         String quJianMa = tvShoujihao.getText().toString();
         if (quJianMa.equals("111111")) {
             ChuanKouCaoZuoUtils.kaiGui(1, 1);
             KaiGuiOrQuBaoSuccessActivity.actionStart(QuJianActivity.this, "qubao");
+            String str = "m" + tvShoujihao.getText().toString() + tvShoujimima.getText().toString();
+
+            AndMqtt.getInstance().publish(new MqttPublish()
+                    .setMsg(str)
+                    .setQos(2).setRetained(false)
+                    .setTopic(ccidAddr), new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+                }
+            });
         }
     }
+
 
     /**
      * @param context 上下文
@@ -576,7 +602,7 @@ public class QuJianActivity extends Activity {
 
                             hashMap = new HashMap<>();
                             for (int i = 0; i < 24; i = i + 2) {
-                                hashMap.put(i / 2, strHex.charAt(i+4) + "" + strHex.charAt(i+5 ));
+                                hashMap.put(i / 2, strHex.charAt(i + 4) + "" + strHex.charAt(i + 5));
 
                             }
 
@@ -584,7 +610,7 @@ public class QuJianActivity extends Activity {
                         }
 
                         for (int i = 0; i < 12; i++) {
-                            Log.i("QuJianActivity", "第" + String.valueOf(i+1) + "个箱子对应的号是：" + hashMap.get(i) + "");
+                            Log.i("QuJianActivity", "第" + String.valueOf(i + 1) + "个箱子对应的号是：" + hashMap.get(i) + "");
                         }
 
 //                            Message msg = new Message();

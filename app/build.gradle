@@ -89,4 +89,8 @@ dependencies {
 
     // 基础依赖包，必须要依赖
     implementation 'com.gyf.immersionbar:immersionbar:2.3.3'
+    implementation project(path: ':library')
+    implementation 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
+    implementation 'com.blankj:utilcode:1.29.0'
+
 }
