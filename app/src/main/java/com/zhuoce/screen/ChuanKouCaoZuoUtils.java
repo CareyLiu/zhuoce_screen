@@ -103,4 +103,28 @@ public class ChuanKouCaoZuoUtils {
         }
 
     }
+
+    /**
+     * 展示蔬菜柜的实时数据
+     * @param menBianHao         门编号
+     * @param chengPanBianHao    秤盘编号
+     * @param shangPinBianHao    商品编号
+     * @param shangPinZhongLiang 商品重量
+     */
+    public void shuCaiGuiShiShiShuJu(String menBianHao, String chengPanBianHao, String shangPinBianHao, String shangPinZhongLiang) {
+        String msg = "k" + menBianHao + chengPanBianHao + shangPinBianHao + shangPinZhongLiang + ".";
+
+        AndMqtt.getInstance().publish(new MqttPublish().setMsg(msg).setQos(2).setTopic(Addr.ccidAddr), new IMqttActionListener() {
+            @Override
+            public void onSuccess(IMqttToken asyncActionToken) {
+                Log.i("mqtt", "发送成功");
+            }
+
+            @Override
+            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+            }
+        });
+    }
+
 }

@@ -72,12 +72,42 @@ public class Video_BaseFragment extends Fragment implements CacheListener {
         });
         checkCachedState();
         startVideo();
+
+        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                calculateView(videoView, mp.getVideoWidth(), mp.getVideoHeight());
+            }
+        });
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
                 videoView.start();
             }
         });
+    }
+
+    private void calculateView(VideoView videoView, int videoWidth, int videoHeight) {
+        int videoViewWidth = videoView.getWidth();
+        int videoViewHeight = videoView.getHeight();
+
+        if (videoWidth < videoViewWidth && videoHeight >= videoViewHeight) {
+            Float rate = Float.valueOf(videoHeight) / Float.valueOf(videoWidth);
+            Float newvideoWidth = videoViewHeight / rate;
+            reSetVideoViewWidth(videoView, newvideoWidth);
+        } else if (videoWidth > videoViewWidth && videoHeight >= videoViewHeight) {
+
+            Float rate = Float.valueOf(videoHeight) / Float.valueOf(videoWidth);
+            Float newvideoWidth = videoViewHeight / rate;
+            reSetVideoViewWidth(videoView, newvideoWidth);
+        }
+    }
+
+    private void reSetVideoViewWidth(VideoView videoView, Float newWidth) {
+        ViewGroup.LayoutParams lp = videoView.getLayoutParams();
+        lp.width = newWidth.intValue();
+        videoView.setLayoutParams(lp);
+
     }
 
     private void checkCachedState() {

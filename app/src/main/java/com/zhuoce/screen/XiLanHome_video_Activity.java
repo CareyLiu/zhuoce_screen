@@ -39,7 +39,7 @@ public class XiLanHome_video_Activity extends FragmentActivity {
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.containerView, Video_BaseFragment.newInstance(Video.ORANGE_10.url))
+                    .add(R.id.containerView, Video_BaseFragment.newInstance(Video.ORANGE_13.url))
                     .commit();
         }
         mImmersionBar = ImmersionBar.with(this);
