@@ -3,8 +3,8 @@ package com.zhuoce.screen;
 public class YingJianZhiLing {
 
 
-    public static byte[] sendZhiLing(int num, int zlm) {
-      return  GuiCaoZuo(0x99, 0xb1, num, zlm, 0, 0);
+    public static byte[] sendZhiLing(int addr, int num, int zlm) {
+        return GuiCaoZuo(0x99, addr, num, zlm, 0, 0);
     }
 
     /**
@@ -24,7 +24,6 @@ public class YingJianZhiLing {
         int leijiahe_b = leijiahe % 256;
 
 
-
         byte[] to_send = openDevice((byte) touxinxi, (byte) ADDR, (byte) NUM, (byte) ZLM, (byte) DATA1, (byte) DATA2, (byte) leijiahe_a, (byte) leijiahe_b);
 
 
@@ -39,7 +38,7 @@ public class YingJianZhiLing {
         byte[] bytes = new byte[8];
 
         bytes[0] = touxinxi;
-       bytes[1] = ADDR;
+        bytes[1] = ADDR;
         bytes[2] = NUM;
         bytes[3] = ZLM;
         bytes[4] = DATA1;

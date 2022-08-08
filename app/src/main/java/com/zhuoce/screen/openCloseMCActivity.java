@@ -198,14 +198,14 @@ public class openCloseMCActivity extends Activity {
         btKaiGui.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                kaiGui(1, 1);
+                kaiGui(1, 1, 1);
             }
         });
         chaXun.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                kaiGui(1, 3);
+                kaiGui(1, 1, 3);
             }
         });
 
@@ -323,10 +323,10 @@ public class openCloseMCActivity extends Activity {
      * @param xiangZiHao 箱子号
      * @param zlm        指令码
      */
-    public void kaiGui(int xiangZiHao, int zlm) {
+    public void kaiGui(int xiangZiHao, int suoHao, int zlm) {
 
         try {
-            byte[] mBuffer = YingJianZhiLing.sendZhiLing(xiangZiHao, zlm);
+            byte[] mBuffer = YingJianZhiLing.sendZhiLing(xiangZiHao, suoHao, zlm);
 
             Log.i(TAG, "成功发送");
 
@@ -360,15 +360,13 @@ public class openCloseMCActivity extends Activity {
 
 
     /**
-     * 查询柜
-     *
      * @param xiangZiHao 箱子号
-     * @param zlm        指令码
+     * @param suoHao     锁号
      */
-    public void chaXunGui(int xiangZiHao, int zlm) {
+    public void chaXunGui(int xiangZiHao, int suoHao) {
 
         try {
-            byte[] mBuffer = YingJianZhiLing.sendZhiLing(xiangZiHao, zlm);
+            byte[] mBuffer = YingJianZhiLing.sendZhiLing(xiangZiHao, suoHao, 3);
 
             Log.i(TAG, "成功发送");
             int i;

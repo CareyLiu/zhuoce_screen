@@ -7,35 +7,38 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name="MyApp"
         android:allowBackup="true"
         android:icon="@mipmap/logo"
         android:label="@string/app_name"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme">
-<!--        <activity-->
-<!--            android:name="com.sample.MenuActivity"-->
-<!--            android:label="@string/app_name">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <!--        <activity-->
+        <!--            android:name="com.sample.MenuActivity"-->
+        <!--            android:label="@string/app_name">-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="android.intent.action.MAIN" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
+        <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+        <!--            </intent-filter>-->
+        <!--        </activity>-->
 
         <activity
+            android:name="com.zhuoce.activity.HomeActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
+            android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            android:name="com.zhuoce.screen.XiLanHome_video_Activity"
-            android:label="@string/app_name">
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name="com.zhuoce.service.DemoService" />
 
         <activity
             android:name="com.zhuoce.screen.openCloseMCActivity"
@@ -97,7 +100,7 @@
         <activity android:name="com.sample.MultipleVideosActivity" />
         <activity android:name="com.sample.VideoGalleryActivity" />
         <activity android:name="com.sample.SharedCacheActivity" />
-        <activity android:name="com.sample.SocketActivity"/>
+        <activity android:name="com.sample.SocketActivity" />
     </application>
 
 </manifest>

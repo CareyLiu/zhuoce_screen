@@ -15,7 +15,8 @@ public enum Video {
     ORANGE_10("http://baobab.kaiyanapp.com/api/v1/playUrl?vid=72941&editionType=default&source=aliyun"),
     ORANGE_11("http://baobab.kaiyanapp.com/api/v1/playUrl?vid=1392&editionType=default&source=aliyun"),
     ORANGE_12("https://android-ljz.oss-cn-hangzhou.aliyuncs.com/video/smart_home.mp4"),
-    ORANGE_13("https://android-ljz.oss-cn-hangzhou.aliyuncs.com/video/smart_home_uncut.mp4");
+    ORANGE_13("https://android-ljz.oss-cn-hangzhou.aliyuncs.com/video/smart_home_uncut.mp4"),
+    ORANGE_14("https://shop.hljsdkj.com/pictures/8.mp4");
 
 
 //    ORANGE_1(Config.ROOT + "orange1.mp4"),

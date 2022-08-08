@@ -472,7 +472,7 @@ public class QuJianActivity extends Activity {
                 break;
 
             case R.id.rl_wangjimima:
-                ChuanKouCaoZuoUtils.kaiGui(1, 3);
+                ChuanKouCaoZuoUtils.kaiGui(1, 3,1);
                 if (mReadThread == null) {
                     mReadThread = new ReadThread();
                     mReadThread.start();
@@ -487,7 +487,7 @@ public class QuJianActivity extends Activity {
         String shouJiHao = tvShoujihao.getText().toString();
         String shouJiMiMa = tvShoujimima.getText().toString();
         if (shouJiHao.equals("1111") && shouJiMiMa.equals("1111")) {
-            ChuanKouCaoZuoUtils.kaiGui(1, 2);
+            ChuanKouCaoZuoUtils.kaiGui(1, 2,1);
             KaiGuiOrQuBaoSuccessActivity.actionStart(QuJianActivity.this, "qubao");
 
 
@@ -499,7 +499,7 @@ public class QuJianActivity extends Activity {
         // TODO: 2022-03-21 校验serverid ccid
         String quJianMa = tvShoujihao.getText().toString();
         if (quJianMa.equals("111111")) {
-            ChuanKouCaoZuoUtils.kaiGui(1, 1);
+            ChuanKouCaoZuoUtils.kaiGui(1, 1,1);
             KaiGuiOrQuBaoSuccessActivity.actionStart(QuJianActivity.this, "qubao");
             String str = "m" + tvShoujihao.getText().toString() + tvShoujimima.getText().toString();
 

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.MessageQueue;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.rairmmd.andmqtt.MqttConnect;
 import com.rairmmd.andmqtt.MqttSubscribe;
 import com.sample.Utils;
 import com.zhuoce.mqtt.DoMqttValue;
+import com.zhuoce.mqtt.MqttZhiLing;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -27,6 +29,9 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import java.util.Properties;
 import java.util.UUID;
+
+import static com.zhuoce.mqtt.Addr.ccidAddr;
+import static com.zhuoce.mqtt.Addr.ccidAddr_server;
 
 
 public class MyApp extends Application {
@@ -84,6 +89,18 @@ public class MyApp extends Application {
                     @Override
                     public void connectComplete(boolean reconnect, String serverURI) {
                         Log.i("Rair", "(MainActivity.java:29)-connectComplete:-&gt;连接完成");
+                        MqttZhiLing.dingYue(ccidAddr);
+                        MqttZhiLing.dingYue(ccidAddr_server);
+
+
+                        MqttZhiLing.publish(ccidAddr_server, "o$");
+
+                        Log.i("LIUCHENG", "发送：" + "小o");
+
+
+                        Log.i("LIUCHENG", "发送:" + "小r");
+                        MqttZhiLing.publish(ccidAddr_server, "r$");
+
                     }
 
                     @Override
@@ -96,6 +113,7 @@ public class MyApp extends Application {
                     @Override
                     public void messageArrived(String topic, MqttMessage message) throws Exception {
 
+                        Log.i("rair", "接收到的数据:" + message);
                         doMqttValue.doValue(getApplicationContext(), topic, message.toString());
                     }
 
@@ -128,6 +146,7 @@ public class MyApp extends Application {
 
     public String getMqttUrl() {
         if (Urls.SERVER_URL.equals("https://shop.hljsdkj.com/")) {
+            Log.i("rair", "tcp://mqtt.hljsdkj.com");
             return "tcp://mqtt.hljsdkj.com";
         } else {
             return "tcp://mqrn.hljsdkj.com";

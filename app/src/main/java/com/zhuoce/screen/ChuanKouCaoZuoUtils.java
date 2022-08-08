@@ -7,6 +7,7 @@ import com.rairmmd.andmqtt.AndMqtt;
 import com.rairmmd.andmqtt.MqttPublish;
 import com.wits.serialport.SerialPort;
 import com.zhuoce.mqtt.Addr;
+import com.zhuoce.mqtt.MqttZhiLing;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
@@ -68,36 +69,25 @@ public class ChuanKouCaoZuoUtils {
      * @param xiangZiHao 箱子号
      * @param zlm        指令码
      */
-    public static void kaiGui(int xiangZiHao, int zlm) {
+    public static void kaiGui(int addr, int xiangZiHao, int zlm) {
+
 
         try {
-            byte[] mBuffer = YingJianZhiLing.sendZhiLing(xiangZiHao, zlm);
-
+            Log.i("LIUCHENG", "执行硬件命令");
+            byte[] mBuffer = YingJianZhiLing.sendZhiLing(addr,xiangZiHao, zlm);
             Log.i(TAG, "成功发送");
-
             if (mOutputStream != null) {
                 mOutputStream.write(mBuffer);
-
-
                 Log.e(TAG, "send kaigui 9 byte to serialport.ok");
             } else {
                 Log.e(TAG, "mOutputStream:--------null");
             }
 
 
-            String msg = "K" + xiangZiHao + "11" + ".";
+            String msg = "k" + xiangZiHao + "11" + ".";
 
-            AndMqtt.getInstance().publish(new MqttPublish().setMsg(msg).setQos(2).setTopic(Addr.ccidAddr), new IMqttActionListener() {
-                @Override
-                public void onSuccess(IMqttToken asyncActionToken) {
-                    Log.i("mqtt", "发送成功");
-                }
+            MqttZhiLing.publish(Addr.ccidAddr, msg);
 
-                @Override
-                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-
-                }
-            });
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -106,6 +96,7 @@ public class ChuanKouCaoZuoUtils {
 
     /**
      * 展示蔬菜柜的实时数据
+     *
      * @param menBianHao         门编号
      * @param chengPanBianHao    秤盘编号
      * @param shangPinBianHao    商品编号
@@ -125,6 +116,33 @@ public class ChuanKouCaoZuoUtils {
 
             }
         });
+    }
+
+    /**
+     * 执行结果 01 打开 02 关闭
+     *
+     * @param str
+     */
+    public void zhiXingJieGuo(String str) {
+
+        String msg = "k" + str + ".";
+
+        AndMqtt.getInstance().publish(new MqttPublish().setMsg(msg).setQos(2).setTopic(Addr.ccidAddr), new IMqttActionListener() {
+            @Override
+            public void onSuccess(IMqttToken asyncActionToken) {
+                if (str.equals("1")) {
+                    Log.i("mqtt", "发送打开");
+                } else if (str.equals("2")) {
+                    Log.i("mqtt", "发送关闭");
+                }
+            }
+
+            @Override
+            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                Log.i("mqtt", "发送失败");
+            }
+        });
+
     }
 
 }
